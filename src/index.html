@@ -123,9 +123,25 @@
             <button class="toolbar-button" id="blur-toggle" title="Toggle Blur Mode">
                 <i class="fas fa-eye-slash"></i>
             </button>
+
+            <div class="toolbar-divider"></div>
+
+            <button class="toolbar-button" id="todo-toggle" title="Toggle Todo List">
+                <i class="fas fa-tasks"></i>
+            </button>
         </div>
 
-        <div id="editor" contenteditable="true"></div>
+        <div class="content-wrapper">
+            <div id="editor" contenteditable="true"></div>
+            <div id="todo-panel" class="hidden">
+                <h3>Todo List</h3>
+                <div class="todo-input-wrapper">
+                    <input type="text" id="todo-input" placeholder="Add new todo...">
+                    <button id="add-todo"><i class="fas fa-plus"></i></button>
+                </div>
+                <ul id="todo-list"></ul>
+            </div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

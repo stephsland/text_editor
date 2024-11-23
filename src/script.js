@@ -392,6 +392,90 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('spellcheckEnabled', editor.spellcheck);
     });
 
+    // Todo list functionality
+    const todoToggle = document.getElementById('todo-toggle');
+    const todoPanel = document.getElementById('todo-panel');
+    const todoInput = document.getElementById('todo-input');
+    const addTodoBtn = document.getElementById('add-todo');
+    const todoList = document.getElementById('todo-list');
+
+    // Load todos from localStorage
+    let todos = JSON.parse(localStorage.getItem('todos') || '[]');
+
+    function saveTodos() {
+        localStorage.setItem('todos', JSON.stringify(todos));
+    }
+
+    function renderTodos() {
+        todoList.innerHTML = '';
+        todos.forEach((todo, index) => {
+            const li = document.createElement('li');
+            li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+            
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.className = 'todo-checkbox';
+            checkbox.checked = todo.completed;
+            checkbox.addEventListener('change', () => toggleTodo(index));
+
+            const text = document.createElement('span');
+            text.className = 'todo-text';
+            text.textContent = todo.text;
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-todo';
+            deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+            deleteBtn.addEventListener('click', () => deleteTodo(index));
+
+            li.appendChild(checkbox);
+            li.appendChild(text);
+            li.appendChild(deleteBtn);
+            todoList.appendChild(li);
+        });
+    }
+
+    function addTodo(text) {
+        if (text.trim()) {
+            todos.push({ text: text.trim(), completed: false });
+            saveTodos();
+            renderTodos();
+            todoInput.value = '';
+        }
+    }
+
+    function toggleTodo(index) {
+        todos[index].completed = !todos[index].completed;
+        saveTodos();
+        renderTodos();
+    }
+
+    function deleteTodo(index) {
+        todos.splice(index, 1);
+        saveTodos();
+        renderTodos();
+    }
+
+    todoToggle.addEventListener('click', () => {
+        todoPanel.classList.toggle('hidden');
+        todoToggle.classList.toggle('active');
+        if (!todoPanel.classList.contains('hidden')) {
+            todoInput.focus();
+        }
+    });
+
+    addTodoBtn.addEventListener('click', () => {
+        addTodo(todoInput.value);
+    });
+
+    todoInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            addTodo(todoInput.value);
+        }
+    });
+
+    // Initialize todos
+    renderTodos();
+
     // Initialize dark mode and load settings
     if (isElectron) {
         // Notify main process of initial dark theme

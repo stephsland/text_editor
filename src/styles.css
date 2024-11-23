@@ -1,0 +1,254 @@
+:root {
+    --default-light-color: #000000;
+    --default-dark-color: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #E0E0E0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: 100%;
+    gap: 20px;
+}
+
+.toolbar {
+    background-color: white;
+    border-radius: 16px;
+    padding: 10px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
+}
+
+.toolbar-select {
+    padding: 6px;
+    border-radius: 6px;
+    border: none;
+    background-color: white;
+    min-height: 12px;
+    font-size: 11px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+#font-family {
+    width: 120px;
+}
+
+#font-size {
+    width: 60px;
+}
+
+.toolbar-button {
+    padding: 6px;
+    border-radius: 6px;
+    border: none;
+    background-color: white;
+    min-height: 12px;
+    min-width: 25px;
+    font-size: 11px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.2s;
+}
+
+.toolbar-button:hover {
+    background-color: #f0f0f0;
+}
+
+.toolbar-button.active {
+    background-color: #e0e0e0;
+}
+
+.toolbar-divider {
+    width: 1px;
+    height: 20px;
+    background-color: #e0e0e0;
+    margin: 0 5px;
+}
+
+:root {
+    --editor-font-size: 12px;
+}
+
+#editor {
+    flex-grow: 1;
+    background-color: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    min-height: 300px;
+    font-size: var(--editor-font-size);
+    cursor: text;
+    position: relative;
+}
+
+#editor.empty:not(:focus)::after {
+    content: '';
+    position: absolute;
+    left: 22px;
+    top: 22px;
+    width: 2px;
+    height: 1.2em;
+    background-color: #000;
+    animation: blink 1s step-end infinite;
+}
+
+body.dark-mode #editor.empty::after {
+    background-color: #fff;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+#editor * {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+
+#editor:focus {
+    outline: none;
+}
+
+#editor span {
+    vertical-align: baseline !important;
+    display: inline !important;
+}
+
+#editor span[style*="background-color"] {
+    padding: 2px 0 !important;
+}
+
+#editor[contenteditable="true"] span[style*="background-color"] {
+    display: inline !important;
+    padding: 1px 0 !important;
+}
+
+#editor p, #editor div {
+    margin: 0;
+    padding: 0;
+    min-height: 1.2em;
+    line-height: 1.5;
+    display: block;
+}
+
+/* Color picker styling */
+input[type="color"] {
+    width: 0;
+    height: 0;
+    padding: 0;
+    border: none;
+    visibility: hidden;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #1a1a1a;
+}
+
+body.dark-mode .toolbar {
+    background-color: #2d2d2d;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .toolbar-button,
+body.dark-mode .toolbar-select {
+    background-color: #2d2d2d;
+    color: #ffffff;
+}
+
+body.dark-mode .toolbar-button:hover {
+    background-color: #3d3d3d;
+}
+
+body.dark-mode .toolbar-button.active {
+    background-color: #4d4d4d;
+}
+
+body.dark-mode .toolbar-divider {
+    background-color: #4d4d4d;
+}
+
+body.dark-mode #editor {
+    background-color: #2d2d2d;
+    color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Blur mode */
+#editor.blur-mode {
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+body.dark-mode #editor.blur-mode {
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+}
+
+/* Selection styles */
+::selection {
+    background-color: rgba(179, 212, 252, 0.5) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+body.dark-mode ::selection {
+    background-color: rgba(64, 64, 64, 0.5) !important;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+body.dark-mode ::-webkit-scrollbar-track {
+    background: #2d2d2d;
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb {
+    background: #666;
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
